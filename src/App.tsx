@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { SizeInput } from './components/SizeInput';
+import { SizeInput } from './components/SizeInput/SizeInput.tsx';
+import { Board } from './components/Board/Board.tsx';
 
 type MazeSize = {
   width: number;
@@ -16,5 +17,5 @@ export default function App() {
     setSize({ width, height });
   }
 
-  return <>{!size && <SizeInput handleSubmit={handleSubmit} />}</>;
+  return <>{!size ? <SizeInput handleSubmit={handleSubmit} /> : <Board size={size} />}</>;
 }
