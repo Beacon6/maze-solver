@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { SizeInput } from './components/SizeInput/SizeInput.tsx';
 import { Board } from './components/Board/Board.tsx';
+import { SizeInput } from './components/SizeInput/SizeInput.tsx';
+
+import { useState } from 'react';
 
 type MazeSize = {
   width: number;

@@ -1,0 +1,12 @@
+.square {
+  width: 24px;
+  height: 24px;
+}
+
+.empty {
+  background: cornflowerblue;
+}
+
+.wall {
+  background: magenta;
+}
