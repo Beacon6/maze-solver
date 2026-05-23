@@ -1,3 +1,5 @@
+import { EditControls } from '../EditControls/EditControls.tsx';
+import type { EditMode } from '../EditControls/EditControls.tsx';
 import { Row } from '../Row/Row.tsx';
 
 import { useState } from 'react';
@@ -45,13 +47,9 @@ function initBoard(size: BoardProps['size']): ISquare[][] {
 
 export function Board({ size }: BoardProps) {
   const [board, setBoard] = useState<ISquare[][]>(() => initBoard(size));
-  const [isEditable, setIsEditable] = useState<boolean>(true);
+  const [editMode, setEditMode] = useState<EditMode>('setStart');
 
   function handlePaint(square: ISquare) {
-    if (!isEditable) {
-      return;
-    }
-
     setBoard((currentBoard) =>
       currentBoard.map((row) =>
         row.map((elem) =>
@@ -63,6 +61,11 @@ export function Board({ size }: BoardProps) {
     );
   }
 
+  function handleEditMode(mode: EditMode) {
+    console.log(`${mode} set`);
+    setEditMode(mode);
+  }
+
   return (
     <>
       {board.map((row) => (
@@ -70,6 +73,7 @@ export function Board({ size }: BoardProps) {
           <Row squares={row} onPaint={handlePaint} />
         </div>
       ))}
+      <EditControls editMode={editMode} onChange={handleEditMode} />
     </>
   );
 }
