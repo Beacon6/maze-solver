@@ -19,7 +19,8 @@ export interface ISquare {
   isStart: boolean;
   isEnd: boolean;
   isWall: boolean;
-  isCurrent: boolean;
+  isPath: boolean;
+  isVisited: boolean;
 }
 
 function initBoard(size: BoardProps['size']): ISquare[][] {
@@ -35,7 +36,8 @@ function initBoard(size: BoardProps['size']): ISquare[][] {
         isStart: false,
         isEnd: false,
         isWall: false,
-        isCurrent: false,
+        isPath: false,
+        isVisited: false,
       };
       boardRow.push(square);
     }
@@ -97,6 +99,7 @@ export function Board({ size }: BoardProps) {
 
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+    console.log(board);
     setEditMode(null);
   }
 
@@ -109,6 +112,62 @@ export function Board({ size }: BoardProps) {
     );
   }
 
+  function sleep(ms: number) {
+    return new Promise((res) => setTimeout(res, ms));
+  }
+
+  function cloneBoard(board: ISquare[][]): ISquare[][] {
+    return board.map((row) =>
+      row.map((square) => ({
+        ...square,
+        coords: { ...square.coords },
+      }))
+    );
+  }
+
+  async function handleSolve(board: ISquare[][]) {
+    const dirs = [
+      [0, -1],
+      [1, 0],
+      [0, 1],
+      [-1, 0],
+    ];
+
+    async function walk(maze: ISquare[][], currentPosition: ISquare): Promise<boolean> {
+      if (currentPosition.isEnd) {
+        currentPosition.isPath = true;
+        setBoard(cloneBoard(maze));
+        return true;
+      }
+
+      if (currentPosition.isWall || currentPosition.isVisited) {
+        return false;
+      }
+
+      currentPosition.isPath = true;
+      currentPosition.isVisited = true;
+      setBoard(cloneBoard(maze));
+      await sleep(50);
+
+      for (let i = 0; i < dirs.length; i++) {
+        const nextPosition =
+          maze[currentPosition.coords.y + dirs[i][1]][currentPosition.coords.x + dirs[i][0]];
+        if (await walk(maze, nextPosition)) {
+          return true;
+        }
+      }
+
+      currentPosition.isPath = false;
+      setBoard(cloneBoard(maze));
+      await sleep(50);
+      return false;
+    }
+
+    const maze = cloneBoard(board);
+    const currentPosition = maze[1][1];
+    await walk(maze, currentPosition);
+  }
+
   return (
     <>
       {board.map((row) => (
@@ -116,12 +175,18 @@ export function Board({ size }: BoardProps) {
           <Row squares={row} onEdit={handleEdit} />
         </div>
       ))}
-      <EditControls
-        editMode={editMode}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-        onReset={handleReset}
-      />
+      {editMode ? (
+        <EditControls
+          editMode={editMode}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          onReset={handleReset}
+        />
+      ) : (
+        <div>
+          <button onClick={() => handleSolve(board)}>Solve!</button>
+        </div>
+      )}
     </>
   );
 }

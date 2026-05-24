@@ -15,6 +15,8 @@ export function Square({ square, onEdit }: SquareProps) {
     styling = 'square end';
   } else if (square.isWall) {
     styling = 'square wall';
+  } else if (square.isPath) {
+    styling = 'square path';
   }
 
   return <div onClick={() => onEdit(square)} className={styling}></div>;
