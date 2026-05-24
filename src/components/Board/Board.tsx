@@ -49,31 +49,79 @@ export function Board({ size }: BoardProps) {
   const [board, setBoard] = useState<ISquare[][]>(() => initBoard(size));
   const [editMode, setEditMode] = useState<EditMode>('setStart');
 
-  function handlePaint(square: ISquare) {
-    setBoard((currentBoard) =>
-      currentBoard.map((row) =>
-        row.map((elem) =>
-          elem.coords.x === square.coords.x && elem.coords.y === square.coords.y
-            ? { ...elem, isWall: true }
-            : elem
+  function handleEdit(square: ISquare) {
+    if (!editMode) {
+      return;
+    }
+
+    if (editMode === 'setStart') {
+      setBoard((currentBoard) =>
+        currentBoard.map((row) =>
+          row.map((elem) =>
+            elem.coords.x === square.coords.x && elem.coords.y === square.coords.y
+              ? { ...elem, isStart: true }
+              : { ...elem, isStart: false }
+          )
         )
-      )
-    );
+      );
+    }
+
+    if (editMode === 'setEnd') {
+      setBoard((currentBoard) =>
+        currentBoard.map((row) =>
+          row.map((elem) =>
+            elem.coords.x === square.coords.x && elem.coords.y === square.coords.y
+              ? { ...elem, isEnd: true }
+              : { ...elem, isEnd: false }
+          )
+        )
+      );
+    }
+
+    if (editMode === 'setWall') {
+      setBoard((currentBoard) =>
+        currentBoard.map((row) =>
+          row.map((elem) =>
+            elem.coords.x === square.coords.x && elem.coords.y === square.coords.y
+              ? { ...elem, isWall: !elem.isWall }
+              : elem
+          )
+        )
+      );
+    }
   }
 
-  function handleEditMode(mode: EditMode) {
-    console.log(`${mode} set`);
+  function handleChange(mode: EditMode) {
     setEditMode(mode);
+  }
+
+  function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setEditMode(null);
+  }
+
+  function handleReset(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setBoard((currentBoard) =>
+      currentBoard.map((row) =>
+        row.map((elem) => ({ ...elem, isStart: false, isEnd: false, isWall: false }))
+      )
+    );
   }
 
   return (
     <>
       {board.map((row) => (
         <div key={row[0].coords.y} className="row">
-          <Row squares={row} onPaint={handlePaint} />
+          <Row squares={row} onEdit={handleEdit} />
         </div>
       ))}
-      <EditControls editMode={editMode} onChange={handleEditMode} />
+      <EditControls
+        editMode={editMode}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        onReset={handleReset}
+      />
     </>
   );
 }

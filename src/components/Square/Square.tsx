@@ -4,12 +4,18 @@ import type { ISquare } from '../Board/Board.tsx';
 
 type SquareProps = {
   square: ISquare;
-  onPaint: (square: ISquare) => void;
+  onEdit: (square: ISquare) => void;
 };
 
-export function Square({ square, onPaint }: SquareProps) {
-  if (square.isWall) {
-    return <div className="square wall"></div>;
+export function Square({ square, onEdit }: SquareProps) {
+  let styling = 'square empty';
+  if (square.isStart) {
+    styling = 'square start';
+  } else if (square.isEnd) {
+    styling = 'square end';
+  } else if (square.isWall) {
+    styling = 'square wall';
   }
-  return <div onPointerEnter={() => onPaint(square)} className="square empty"></div>;
+
+  return <div onClick={() => onEdit(square)} className={styling}></div>;
 }

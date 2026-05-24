@@ -5,11 +5,9 @@ import { Square } from '../Square/Square.tsx';
 
 type RowProps = {
   squares: ISquare[];
-  onPaint: (square: ISquare) => void;
+  onEdit: (square: ISquare) => void;
 };
 
-export function Row({ squares, onPaint }: RowProps) {
-  return squares.map((square) => (
-    <Square key={square.coords.x} square={square} onPaint={onPaint} />
-  ));
+export function Row({ squares, onEdit }: RowProps) {
+  return squares.map((square) => <Square key={square.coords.x} square={square} onEdit={onEdit} />);
 }

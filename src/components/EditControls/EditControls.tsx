@@ -1,13 +1,15 @@
-export type EditMode = 'setStart' | 'setEnd' | 'paintWalls';
+export type EditMode = 'setStart' | 'setEnd' | 'setWall' | null;
 
 type EditControlsProps = {
   editMode: EditMode;
   onChange: (mode: EditMode) => void;
+  onSubmit: (event: React.SubmitEvent<HTMLFormElement>) => void;
+  onReset: (event: React.SubmitEvent<HTMLFormElement>) => void;
 };
 
-export function EditControls({ editMode, onChange }: EditControlsProps) {
+export function EditControls({ editMode, onChange, onSubmit, onReset }: EditControlsProps) {
   return (
-    <form>
+    <form onSubmit={onSubmit} onReset={onReset}>
       <fieldset>
         <legend>Edit Mode</legend>
 
@@ -45,13 +47,17 @@ export function EditControls({ editMode, onChange }: EditControlsProps) {
             id="paintWallsChoice"
             name="editMode"
             value="paintWalls"
-            checked={editMode === 'paintWalls'}
+            checked={editMode === 'setWall'}
             onChange={() => {
-              onChange('paintWalls');
+              onChange('setWall');
             }}
           />
           Paint Wall
         </label>
+      </fieldset>
+      <fieldset>
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
       </fieldset>
     </form>
   );
