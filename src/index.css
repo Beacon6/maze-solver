@@ -105,37 +105,6 @@ input::-webkit-inner-spin-button {
   cursor: not-allowed;
 }
 
-.tool-card {
-  width: min(100%, 25rem);
-  padding: 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
-  box-shadow: 0 1.25rem 3rem rgb(0 0 0 / 18%);
-}
-
-.workspace__hint {
-  margin: 0.4rem 0 0;
-  color: var(--text-muted);
-  font-size: 0.92rem;
-}
-
-.workspace {
-  display: grid;
-  align-items: start;
-  gap: 1.25rem;
-}
-.tool-card {
-  width: 100%;
-}
-.tool-card__title {
-  margin: 0 0 0.85rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
 .tool-switch {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -237,24 +206,4 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: flex-end;
   margin-top: 1rem;
-}
-
-@media (min-width: 52rem) {
-  .workspace {
-    grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
-  }
-  .tool-card {
-    position: sticky;
-    top: 1rem;
-  }
-}
-
-@media (max-width: 30rem) {
-  .tool-switch {
-    grid-template-columns: 1fr;
-  }
-  .square {
-    width: 1.85rem;
-    height: 1.85rem;
-  }
 }

@@ -10,12 +10,12 @@ export function SizeInput({ onSubmit }: SizeInputProps) {
   const heightLabel = 'Height:';
 
   return (
-    <section className="max-w-md mx-auto p-5">
+    <section id="size-input" className="max-w-md mx-auto p-5">
       <h1 className="text-(--text-primary) text-xl font-bold">Create maze</h1>
       <p className="text-(--text-secondary) text-sm mt-2">
         Choose the dimensions for your editable maze grid.
       </p>
-      <form id="size-input" action={onSubmit} className="grid mt-4 gap-4">
+      <form action={onSubmit} className="grid mt-4 gap-4">
         <label htmlFor="width" className="grid gap-1.5 text-(--text-primary) text-sm font-semibold">
           {widthLabel}
           <input

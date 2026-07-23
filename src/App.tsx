@@ -37,7 +37,7 @@ export default function App() {
       </header>
       <main className="max-w-5xl mx-auto p-5">
         {size ? (
-          <div className="workspace">
+          <div className="grid items-start gap-5 md:grid-cols-[18rem_minmax(0,1fr)]">
             <ModeSwitch editMode={editMode} onChange={handleSetEditMode} />
             <Board size={size} editMode={editMode} />
           </div>
