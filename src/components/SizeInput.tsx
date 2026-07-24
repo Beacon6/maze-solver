@@ -25,6 +25,7 @@ export function SizeInput({ onSubmit }: SizeInputProps) {
             defaultValue={defaults.width}
             type="number"
             min="1"
+            max="25"
             required
           />
         </label>
@@ -40,6 +41,7 @@ export function SizeInput({ onSubmit }: SizeInputProps) {
             defaultValue={defaults.height}
             type="number"
             min="1"
+            max="50"
             required
           />
         </label>

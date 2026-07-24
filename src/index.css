@@ -138,34 +138,16 @@ input::-webkit-inner-spin-button {
   background: var(--primary-subtle);
 }
 
-.maze-panel {
-  min-width: 0;
-  padding: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  background: var(--surface);
-  box-shadow: 0 1.25rem 3rem rgb(0 0 0 / 14%);
-}
-.maze-scroll {
-  overflow-x: auto;
-  padding: 0.35rem;
-  scrollbar-color: var(--border-strong) transparent;
-}
-.maze {
-  display: flex;
-  width: max-content;
-  flex-direction: column;
-  gap: 0.18rem;
-}
 .maze-row {
   display: flex;
   width: max-content;
   gap: 0.18rem;
 }
+
 .square {
   display: grid;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   padding: 0;
   border: 1px solid rgb(16 20 31 / 16%);
   border-radius: 0.28rem;
@@ -175,28 +157,29 @@ input::-webkit-inner-spin-button {
     transform 0.12s,
     box-shadow 0.12s;
 }
+
 .square:hover {
   filter: brightness(1.08);
   transform: scale(1.05);
   z-index: 1;
 }
+
 .square--start {
   background: var(--cell-start);
 }
+
 .square--end {
   background: var(--cell-end);
 }
+
 .square--wall {
   background: var(--cell-wall);
 }
+
 .square--path {
   background: var(--cell-path);
 }
+
 .square--visited {
   background: var(--cell-visited);
-}
-.maze-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
 }
