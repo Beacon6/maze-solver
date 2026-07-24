@@ -1,11 +1,11 @@
 import { type EditMode } from '../App.tsx';
 
-type ModeSwitchProps = {
+type ControlsProps = {
   editMode: EditMode;
   onChange: (mode: EditMode) => void;
 };
 
-export function ModeSwitch({ editMode, onChange }: ModeSwitchProps) {
+export function Controls({ editMode, onChange }: ControlsProps) {
   const modes: { label: string; value: EditMode }[] = [
     { label: 'Start', value: 'setStart' },
     { label: 'End', value: 'setEnd' },
@@ -13,11 +13,11 @@ export function ModeSwitch({ editMode, onChange }: ModeSwitchProps) {
   ];
 
   return (
-    <section id="mode-switch">
+    <section id="controls" className="md:sticky md:top-4">
       <h2 className="text-(--text-primary) text-sm font-bold uppercase mb-3">Edit mode</h2>
-      <div className="tool-switch">
+      <div className="grid grid-cols-3 gap-2">
         {modes.map((mode) => (
-          <label className="tool-option" key={mode.value}>
+          <label className="controls-toggle" key={mode.value}>
             <input
               checked={editMode === mode.value}
               name="edit-mode"

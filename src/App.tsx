@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Board } from './components/Board.tsx';
-import { ModeSwitch } from './components/ModeSwitch.tsx';
+import { Controls } from './components/Controls.tsx';
 import { NavBar } from './components/NavBar.tsx';
 import { SizeInput } from './components/SizeInput.tsx';
 
@@ -38,7 +38,7 @@ export default function App() {
       <main className="max-w-5xl mx-auto p-5">
         {size ? (
           <div className="grid items-start gap-5 md:grid-cols-[18rem_minmax(0,1fr)]">
-            <ModeSwitch editMode={editMode} onChange={handleSetEditMode} />
+            <Controls editMode={editMode} onChange={handleSetEditMode} />
             <Board size={size} editMode={editMode} />
           </div>
         ) : (
