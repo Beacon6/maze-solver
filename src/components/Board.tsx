@@ -131,7 +131,7 @@ export function Board({ size, editMode }: BoardProps) {
 
   return (
     <section id="maze">
-      <h2 className="text-(--text-primary) text-sm font-bold uppercase mb-3">Maze</h2>
+      <h2 className="text-(--text-primary) text-sm text-center font-bold uppercase mb-3">Maze</h2>
       <div className="grid place-items-center gap-1">
         {board.map((row) => (
           <Row key={row[0].coords.y} row={row} editMode={editMode} handleEdit={handleEdit} />
