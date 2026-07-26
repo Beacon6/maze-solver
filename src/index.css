@@ -173,10 +173,12 @@ input {
   background: var(--cell-empty);
   transition:
     border-color var(--transition-time),
-    background var(--transition-time);
+    background var(--transition-time),
+    transform var(--transition-time);
 
   &:hover {
     border-color: var(--primary);
+    transform: scale(1.1);
   }
 }
 
