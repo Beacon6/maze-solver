@@ -1,12 +1,11 @@
-import { type ControlAction, type EditMode } from '../App.tsx';
+import { type EditMode } from './Maze.tsx';
 
 type ControlsProps = {
   editMode: EditMode;
   onChange: (mode: EditMode) => void;
-  onControl: (action: ControlAction, state: boolean) => void;
 };
 
-export function Controls({ editMode, onChange, onControl }: ControlsProps) {
+export function Controls({ editMode, onChange }: ControlsProps) {
   const modes: { label: string; value: EditMode }[] = [
     { label: 'Start', value: 'setStart' },
     { label: 'End', value: 'setEnd' },
@@ -33,15 +32,10 @@ export function Controls({ editMode, onChange, onControl }: ControlsProps) {
           ))}
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <button onClick={() => onControl('solve', true)} className="button-primary">
+          <button className="button-primary" title="Not implemented yet" disabled>
             Solve
           </button>
-          <button
-            onClick={() => onControl('reset', true)}
-            className="button-danger"
-            title="Not implemented yet"
-            disabled
-          >
+          <button className="button-danger" title="Not implemented yet" disabled>
             Reset
           </button>
         </div>

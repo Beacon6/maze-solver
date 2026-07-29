@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { type EditMode, type MazeSize } from '../App.tsx';
+import { type EditMode } from './Maze.tsx';
+import { type MazeSize } from '../App.tsx';
 import { Row } from './Row.tsx';
 
 type BoardProps = {
@@ -45,7 +46,6 @@ function initBoard(size: MazeSize): ISquare[][] {
 
 export function Board({ size, editMode }: BoardProps) {
   const [board, setBoard] = useState<ISquare[][]>(() => initBoard(size));
-  const [isSolving, setIsSolving] = useState(false);
 
   function handleEdit(square: ISquare, editMode: EditMode) {
     const modeToParamMap = {
