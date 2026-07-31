@@ -1,16 +1,16 @@
 import { useState } from 'react';
 
+import { type EditMode, type MazeSize, type Square } from '../types.ts';
 import { Board } from './Board.tsx';
 import { Controls } from './Controls.tsx';
-import { type MazeSize } from '../App.tsx';
+import { createBoard } from '../helpers/board.ts';
 
 type MazeProps = {
   size: MazeSize;
 };
 
-export type EditMode = 'setStart' | 'setEnd' | 'setWall';
-
 export function Maze({ size }: MazeProps) {
+  const [board, setBoard] = useState<Square[][]>(() => createBoard(size));
   const [editMode, setEditMode] = useState<EditMode>('setStart');
 
   function handleEditMode(mode: EditMode) {

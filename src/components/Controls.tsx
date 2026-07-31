@@ -1,4 +1,4 @@
-import { type EditMode } from './Maze.tsx';
+import { type EditMode } from '../types.ts';
 
 type ControlsProps = {
   editMode: EditMode;

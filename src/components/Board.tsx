@@ -1,48 +1,11 @@
 import { useState } from 'react';
 
-import { type EditMode } from './Maze.tsx';
-import { type MazeSize } from '../App.tsx';
 import { Row } from './Row.tsx';
 
 type BoardProps = {
   size: MazeSize;
   editMode: EditMode;
 };
-
-export interface ISquare {
-  coords: {
-    x: number;
-    y: number;
-  };
-  isStart: boolean;
-  isEnd: boolean;
-  isWall: boolean;
-  isPath: boolean;
-  isVisited: boolean;
-}
-
-function initBoard(size: MazeSize): ISquare[][] {
-  const board: ISquare[][] = [];
-  for (let y = 0; y < size.height; y++) {
-    const boardRow: ISquare[] = [];
-    for (let x = 0; x < size.width; x++) {
-      const square: ISquare = {
-        coords: {
-          x: x,
-          y: y,
-        },
-        isStart: false,
-        isEnd: false,
-        isWall: false,
-        isPath: false,
-        isVisited: false,
-      };
-      boardRow.push(square);
-    }
-    board.push(boardRow);
-  }
-  return board;
-}
 
 export function Board({ size, editMode }: BoardProps) {
   const [board, setBoard] = useState<ISquare[][]>(() => initBoard(size));
