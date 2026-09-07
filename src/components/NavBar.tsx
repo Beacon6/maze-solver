@@ -1,14 +1,14 @@
-export function Navbar() {
-  const title = 'Maze Solver';
-  const gitHubUrl = 'https://github.com/Beacon6/maze-solver';
+const APP_TITLE = 'Maze Solver';
+const GITHUB_URL = 'https://github.com/Beacon6/maze-solver';
 
+export function Navbar() {
   return (
     <nav className="flex items-center justify-between">
       <a href="/" className="text-(--text-primary) text-2xl font-bold">
-        {title}
+        {APP_TITLE}
       </a>
       {/* TODO: Add help */}
-      <a href={gitHubUrl} className="social-button">
+      <a href={GITHUB_URL} className="social-button">
         <img src="/github.svg" />
       </a>
     </nav>

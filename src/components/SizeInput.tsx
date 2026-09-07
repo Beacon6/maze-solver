@@ -11,11 +11,10 @@ type SizeInputProps = {
   onCreate: (size: MazeSize) => void;
 };
 
-const mazeSizeIsValid = (size: MazeSize): boolean => {
+function mazeSizeIsValid(size: MazeSize): boolean {
   const { width, height } = size;
-
   const isValid =
-    Number.isInteger(width) &&
+    Number.isInteger(width) && // Number.isNaN(Number('str'))
     Number.isInteger(height) &&
     MIN_WIDTH <= width &&
     width <= MAX_WIDTH &&
@@ -25,21 +24,19 @@ const mazeSizeIsValid = (size: MazeSize): boolean => {
   if (!isValid) {
     console.warn('Invalid maze size:', size);
   }
-
   return isValid;
-};
+}
 
 export function SizeInput({ onCreate }: SizeInputProps) {
-  const handleSubmit = (formData: FormData) => {
+  function handleSubmit(formData: FormData): void {
     const size: MazeSize = {
-      width: Number(formData.get('width')),
+      width: Number(formData.get('width')), // Number(null) === 0
       height: Number(formData.get('height')),
     };
 
     if (!mazeSizeIsValid(size)) return;
-
     onCreate(size);
-  };
+  }
 
   return (
     <section id="size-input" className="max-w-md mx-auto p-5">
@@ -49,7 +46,7 @@ export function SizeInput({ onCreate }: SizeInputProps) {
       </p>
       <form action={handleSubmit} className="grid mt-4 gap-4">
         <label htmlFor="width" className="grid gap-1.5 text-(--text-primary) text-sm font-semibold">
-          Width ({MIN_WIDTH}–{MAX_WIDTH})
+          Width ({MIN_WIDTH} - {MAX_WIDTH})
           <input
             id="width"
             name="width"
@@ -65,7 +62,7 @@ export function SizeInput({ onCreate }: SizeInputProps) {
           htmlFor="height"
           className="grid gap-1.5 text-(--text-primary) text-sm font-semibold"
         >
-          Height ({MIN_HEIGHT}–{MAX_HEIGHT})
+          Height ({MIN_HEIGHT} - {MAX_HEIGHT})
           <input
             id="height"
             name="height"

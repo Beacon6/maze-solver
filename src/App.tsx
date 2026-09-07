@@ -8,9 +8,9 @@ import { SizeInput } from './components/SizeInput.tsx';
 export default function App() {
   const [size, setSize] = useState<MazeSize>();
 
-  function handleSetSize(size: MazeSize) {
+  function handleSetSize(size: MazeSize): void {
     setSize(size);
-    console.debug('Settings maze size:', size);
+    console.debug('Setting maze size:', size);
   }
 
   return (
