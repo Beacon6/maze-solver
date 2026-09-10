@@ -1,4 +1,4 @@
-import { type MazeSize } from '../types.ts';
+import { type Size } from '../types.ts';
 
 const MIN_WIDTH = 1;
 const DEFAULT_WIDTH = 10;
@@ -8,10 +8,10 @@ const DEFAULT_HEIGHT = 10;
 const MAX_HEIGHT = 25;
 
 type SizeInputProps = {
-  onCreate: (size: MazeSize) => void;
+  onCreate: (size: Size) => void;
 };
 
-function mazeSizeIsValid(size: MazeSize): boolean {
+function mazeSizeIsValid(size: Size): boolean {
   const { width, height } = size;
   const isValid =
     Number.isInteger(width) && // Number.isNaN(Number('str'))
@@ -29,7 +29,7 @@ function mazeSizeIsValid(size: MazeSize): boolean {
 
 export function SizeInput({ onCreate }: SizeInputProps) {
   function handleSubmit(formData: FormData): void {
-    const size: MazeSize = {
+    const size: Size = {
       width: Number(formData.get('width')), // Number(null) === 0
       height: Number(formData.get('height')),
     };

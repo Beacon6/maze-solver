@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 import { Maze } from './components/Maze.tsx';
-import { type MazeSize } from './types.ts';
 import { Navbar } from './components/Navbar.tsx';
+import { type Size } from './types.ts';
 import { SizeInput } from './components/SizeInput.tsx';
 
 export default function App() {
-  const [size, setSize] = useState<MazeSize>();
+  const [size, setSize] = useState<Size>();
 
-  function handleSetSize(size: MazeSize): void {
+  function handleSetSize(size: Size): void {
     setSize(size);
     console.debug('Setting maze size:', size);
   }
