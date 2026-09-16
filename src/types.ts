@@ -19,8 +19,8 @@ export type Square = {
 
 export type MazeState = {
   cells: Square[][];
-  start?: Coordinates;
-  end?: Coordinates;
+  start: Coordinates | null;
+  end: Coordinates | null;
 };
 
 export type EditMode = 'setStart' | 'setEnd' | 'setWall';

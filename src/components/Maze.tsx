@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { type EditMode, type Size, type Square } from '../types.ts';
+import { type EditMode, type MazeState, type Size, type Square } from '../types.ts';
 import { Board } from './Board.tsx';
 import { Controls } from './Controls.tsx';
 
@@ -34,7 +34,11 @@ function createBoard(size: Size): Square[][] {
 
 export function Maze({ size }: MazeProps) {
   const [editMode, setEditMode] = useState<EditMode>(DEFAULT_EDIT_MODE);
-  const [board, setBoard] = useState<Square[][]>(() => createBoard(size));
+  const [mazeState, setMazeState] = useState<MazeState>(() => ({
+    cells: createBoard(size),
+    start: null,
+    end: null,
+  }));
 
   function handleEditMode(mode: EditMode): void {
     if (editMode === mode) return;
@@ -42,14 +46,14 @@ export function Maze({ size }: MazeProps) {
     console.debug('Setting edit mode:', mode);
   }
 
-  function handleSetBoard(board: Square[][]): void {
-    setBoard(board);
+  function handleSetMazeState(newState: MazeState): void {
+    setMazeState(newState);
   }
 
   return (
     <div className="grid items-start gap-5 md:grid-cols-[18rem_minmax(0,1fr)]">
       <Controls editMode={editMode} onChange={handleEditMode} />
-      <Board editMode={editMode} board={board} onBoardChange={handleSetBoard} />
+      <Board editMode={editMode} maze={mazeState} onMazeStateChange={handleSetMazeState} />
     </div>
   );
 }
