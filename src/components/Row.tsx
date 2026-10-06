@@ -1,5 +1,4 @@
-import { type EditMode } from '../App.tsx';
-import { type ISquare } from './Board.tsx';
+import { type EditMode, type Square as ISquare } from '../types.ts';
 import { Square } from './Square.tsx';
 
 type RowProps = {

@@ -1,11 +1,13 @@
 import { type EditMode } from '../types.ts';
 
-type ControlsProps = {
+type EditControlsProps = {
   editMode: EditMode;
   onChange: (mode: EditMode) => void;
+  onSolve: () => void;
+  onReset: () => void;
 };
 
-export function Controls({ editMode, onChange }: ControlsProps) {
+export function EditControls({ editMode, onChange, onSolve, onReset }: EditControlsProps) {
   const modes: { label: string; value: EditMode }[] = [
     { label: 'Start', value: 'setStart' },
     { label: 'End', value: 'setEnd' },
@@ -32,10 +34,10 @@ export function Controls({ editMode, onChange }: ControlsProps) {
           ))}
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <button className="button-primary" title="Not implemented yet" disabled>
+          <button className="button-primary" onClick={onSolve}>
             Solve
           </button>
-          <button className="button-danger" title="Not implemented yet" disabled>
+          <button className="button-danger" onClick={onReset}>
             Reset
           </button>
         </div>

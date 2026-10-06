@@ -14,7 +14,7 @@ type SizeInputProps = {
 function mazeSizeIsValid(size: Size): boolean {
   const { width, height } = size;
   const isValid =
-    Number.isInteger(width) && // Number.isNaN(Number('str'))
+    Number.isInteger(width) &&
     Number.isInteger(height) &&
     MIN_WIDTH <= width &&
     width <= MAX_WIDTH &&
@@ -30,7 +30,7 @@ function mazeSizeIsValid(size: Size): boolean {
 export function SizeInput({ onCreate }: SizeInputProps) {
   function handleSubmit(formData: FormData): void {
     const size: Size = {
-      width: Number(formData.get('width')), // Number(null) === 0
+      width: Number(formData.get('width')),
       height: Number(formData.get('height')),
     };
 

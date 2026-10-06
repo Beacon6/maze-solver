@@ -1,5 +1,4 @@
-import { type EditMode } from '../App.tsx';
-import { type ISquare } from './Board.tsx';
+import { type EditMode, type Square as ISquare } from '../types.ts';
 
 type SquareProps = {
   square: ISquare;
@@ -8,23 +7,17 @@ type SquareProps = {
 };
 
 export function Square({ square, editMode, onEdit }: SquareProps) {
-  const variant = square.isStart
-    ? 'square--start'
-    : square.isEnd
-      ? 'square--end'
-      : square.isWall
-        ? 'square--wall'
-        : square.isPath
-          ? 'square--path'
-          : square.isVisited
-            ? 'square--visited'
-            : '';
+  // const variant = square.isStart
+  //   ? 'square--start'
+  //   : square.isEnd
+  //     ? 'square--end'
+  //     : square.isWall
+  //       ? 'square--wall'
+  //       : square.isPath
+  //         ? 'square--path'
+  //         : square.isVisited
+  //           ? 'square--visited'
+  //           : '';
 
-  return (
-    <button
-      type="button"
-      onClick={() => onEdit(square, editMode)}
-      className={`square ${variant}`}
-    />
-  );
+  return <button type="button" onClick={() => onEdit(square, editMode)} className="square" />;
 }

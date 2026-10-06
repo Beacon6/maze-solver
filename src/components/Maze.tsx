@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
-import { type EditMode, type MazeState, type Size, type Square } from '../types.ts';
+import { type EditMode, type MazeState, type Size } from '../types.ts';
 import { Board } from './Board.tsx';
-import { Controls } from './Controls.tsx';
+import { createBoard } from '../helpers.ts';
+import { EditControls } from './EditControls.tsx';
 
 const DEFAULT_EDIT_MODE: EditMode = 'setStart';
 
@@ -10,32 +11,11 @@ type MazeProps = {
   size: Size;
 };
 
-function createBoard(size: Size): Square[][] {
-  const board: Square[][] = [];
-  for (let y = 0; y < size.height; y++) {
-    const boardRow: Square[] = [];
-    for (let x = 0; x < size.width; x++) {
-      const square: Square = {
-        coords: {
-          x: x,
-          y: y,
-        },
-        type: 'empty',
-        onPath: false,
-        isVisited: false,
-      };
-      boardRow.push(square);
-    }
-    board.push(boardRow);
-  }
-  console.debug('Maze created with size:', size);
-  return board;
-}
-
 export function Maze({ size }: MazeProps) {
   const [editMode, setEditMode] = useState<EditMode>(DEFAULT_EDIT_MODE);
+  const [isSolving, setIsSolving] = useState<boolean>(false);
   const [mazeState, setMazeState] = useState<MazeState>(() => ({
-    cells: createBoard(size),
+    board: createBoard(size),
     start: null,
     end: null,
   }));
@@ -46,14 +26,37 @@ export function Maze({ size }: MazeProps) {
     console.debug('Setting edit mode:', mode);
   }
 
+  function handleSolve(): void {
+    if (isSolving) return;
+    setIsSolving(true);
+    console.debug('handleSolve is not implemented yet');
+  }
+
+  // TODO: This should maybe restore to already configured maze
+  function handleReset(): void {
+    const cleanMazeState = {
+      board: createBoard(size),
+      start: null,
+      end: null,
+    };
+    setMazeState(cleanMazeState);
+    console.debug('Maze state restored to:', cleanMazeState);
+  }
+
   function handleSetMazeState(newState: MazeState): void {
     setMazeState(newState);
+    console.debug('New maze state:', newState);
   }
 
   return (
     <div className="grid items-start gap-5 md:grid-cols-[18rem_minmax(0,1fr)]">
-      <Controls editMode={editMode} onChange={handleEditMode} />
-      <Board editMode={editMode} maze={mazeState} onMazeStateChange={handleSetMazeState} />
+      <EditControls
+        editMode={editMode}
+        onChange={handleEditMode}
+        onSolve={handleSolve}
+        onReset={handleReset}
+      />
+      <Board editMode={editMode} maze={mazeState} onMazeChange={handleSetMazeState} />
     </div>
   );
 }

@@ -18,7 +18,7 @@ export type Square = {
 };
 
 export type MazeState = {
-  cells: Square[][];
+  board: Square[][];
   start: Coordinates | null;
   end: Coordinates | null;
 };
