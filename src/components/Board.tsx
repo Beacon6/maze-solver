@@ -1,21 +1,21 @@
+import Square from './Square';
+
+import { compareCoordinates } from '../helpers';
 import { type Coordinates, type EditMode, type MazeState } from '../types';
 
 type BoardProps = {
-  editMode: EditMode;
   maze: MazeState;
+  editMode: EditMode;
   onMazeChange: (newState: MazeState) => void;
 };
 
-export default function Board({ editMode, maze, onMazeChange }: BoardProps) {
+export default function Board({ maze, editMode, onMazeChange }: BoardProps) {
   function handleEdit(coords: Coordinates, editMode: EditMode): void {
-    const isSelected = (position: Coordinates | null): boolean =>
-      position?.x === coords.x && position?.y === coords.y;
-
     const clearedMaze: MazeState = {
       ...maze,
-      start: isSelected(maze.start) ? null : maze.start,
-      end: isSelected(maze.end) ? null : maze.end,
-      walls: maze.walls.filter((wall) => !isSelected(wall)),
+      start: compareCoordinates(maze.start, coords) ? null : maze.start,
+      end: compareCoordinates(maze.end, coords) ? null : maze.end,
+      walls: maze.walls.filter((wall) => !compareCoordinates(wall, coords)),
     };
 
     if (editMode === 'setWall') {
@@ -43,28 +43,15 @@ export default function Board({ editMode, maze, onMazeChange }: BoardProps) {
       <div className="grid place-items-center gap-1">
         {Array.from({ length: maze.size.height }, (_, y) => (
           <div key={y} className="grid grid-flow-col gap-1">
-            {Array.from({ length: maze.size.width }, (_, x) => {
-              const isStart = x === maze.start?.x && y === maze.start?.y;
-              const isEnd = x === maze.end?.x && y === maze.end?.y;
-              const isWall = maze.walls.some((wall) => x === wall.x && y === wall.y);
-
-              const variant = isStart
-                ? 'square--start'
-                : isEnd
-                  ? 'square--end'
-                  : isWall
-                    ? 'square--wall'
-                    : '';
-
-              return (
-                <button
-                  key={`${x},${y}`}
-                  type="button"
-                  onClick={() => handleEdit({ x: x, y: y }, editMode)}
-                  className={'square ' + variant}
-                />
-              );
-            })}
+            {Array.from({ length: maze.size.width }, (_, x) => (
+              <Square
+                key={`${x},${y}`}
+                maze={maze}
+                position={{ x: x, y: y }}
+                editMode={editMode}
+                onEdit={handleEdit}
+              />
+            ))}
           </div>
         ))}
       </div>

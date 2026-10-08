@@ -1,23 +1,25 @@
-import { type EditMode, type Square as ISquare } from '../types.ts';
+import { compareCoordinates } from '../helpers';
+import { type Coordinates, type EditMode, type MazeState } from '../types';
 
 type SquareProps = {
-  square: ISquare;
+  maze: MazeState;
+  position: Coordinates;
   editMode: EditMode;
-  onEdit: (square: ISquare, editMode: EditMode) => void;
+  onEdit: (coords: Coordinates, editMode: EditMode) => void;
 };
 
-export function Square({ square, editMode, onEdit }: SquareProps) {
-  // const variant = square.isStart
-  //   ? 'square--start'
-  //   : square.isEnd
-  //     ? 'square--end'
-  //     : square.isWall
-  //       ? 'square--wall'
-  //       : square.isPath
-  //         ? 'square--path'
-  //         : square.isVisited
-  //           ? 'square--visited'
-  //           : '';
+export default function Square({ maze, position, editMode, onEdit }: SquareProps) {
+  const isStart = compareCoordinates(maze.start, position);
+  const isEnd = compareCoordinates(maze.end, position);
+  const isWall = maze.walls.some((wall) => compareCoordinates(wall, position));
 
-  return <button type="button" onClick={() => onEdit(square, editMode)} className="square" />;
+  const variant = isStart ? 'square--start' : isEnd ? 'square--end' : isWall ? 'square--wall' : '';
+
+  return (
+    <button
+      type="button"
+      onClick={() => onEdit(position, editMode)}
+      className={'square ' + variant}
+    />
+  );
 }

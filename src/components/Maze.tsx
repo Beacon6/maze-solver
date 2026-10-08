@@ -47,7 +47,7 @@ export default function Maze({ size }: MazeProps) {
         onSolve={handleSolve}
         onReset={handleReset}
       />
-      <Board editMode={editMode} maze={mazeState} onMazeChange={handleSetMazeState} />
+      <Board maze={mazeState} editMode={editMode} onMazeChange={handleSetMazeState} />
     </div>
   );
 }
