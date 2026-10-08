@@ -1,4 +1,4 @@
-FROM node:24-alpine AS build
+FROM node:24-slim AS build
 
 WORKDIR /app
 
@@ -8,6 +8,8 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-EXPOSE 4173
+FROM nginx:1.31-alpine-slim AS run
 
-CMD ["npm", "run", "preview", "--", "--host"]
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
