@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
-import { Maze } from './components/Maze.tsx';
-import { Navbar } from './components/Navbar.tsx';
-import { type Size } from './types.ts';
-import { SizeInput } from './components/SizeInput.tsx';
+import Maze from './components/Maze';
+import Navbar from './components/Navbar';
+import SizeInput from './components/SizeInput';
+
+import { type Size } from './types';
 
 export default function App() {
   const [size, setSize] = useState<Size>();

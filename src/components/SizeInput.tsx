@@ -1,11 +1,11 @@
-import { type Size } from '../types.ts';
+import { type Size } from '../types';
 
 const MIN_WIDTH = 1;
 const DEFAULT_WIDTH = 10;
-const MAX_WIDTH = 25;
+const MAX_WIDTH = 24;
 const MIN_HEIGHT = 1;
 const DEFAULT_HEIGHT = 10;
-const MAX_HEIGHT = 25;
+const MAX_HEIGHT = 24;
 
 type SizeInputProps = {
   onCreate: (size: Size) => void;
@@ -27,7 +27,7 @@ function mazeSizeIsValid(size: Size): boolean {
   return isValid;
 }
 
-export function SizeInput({ onCreate }: SizeInputProps) {
+export default function SizeInput({ onCreate }: SizeInputProps) {
   function handleSubmit(formData: FormData): void {
     const size: Size = {
       width: Number(formData.get('width')),

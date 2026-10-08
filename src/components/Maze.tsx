@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { type EditMode, type MazeState, type Size } from '../types.ts';
-import { Board } from './Board.tsx';
-import { createBoard } from '../helpers.ts';
-import { EditControls } from './EditControls.tsx';
+import Board from './Board';
+import EditControls from './EditControls';
+
+import { type EditMode, type MazeState, type Size } from '../types';
 
 const DEFAULT_EDIT_MODE: EditMode = 'setStart';
 
@@ -11,14 +11,19 @@ type MazeProps = {
   size: Size;
 };
 
-export function Maze({ size }: MazeProps) {
-  const [editMode, setEditMode] = useState<EditMode>(DEFAULT_EDIT_MODE);
-  const [isSolving, setIsSolving] = useState<boolean>(false);
+export default function Maze({ size }: MazeProps) {
   const [mazeState, setMazeState] = useState<MazeState>(() => ({
-    board: createBoard(size),
+    size: size,
     start: null,
     end: null,
+    walls: [],
   }));
+  const [editMode, setEditMode] = useState<EditMode>(DEFAULT_EDIT_MODE);
+
+  function handleSetMazeState(maze: MazeState): void {
+    setMazeState(maze);
+    console.debug('New maze state:', maze);
+  }
 
   function handleEditMode(mode: EditMode): void {
     if (editMode === mode) return;
@@ -27,25 +32,11 @@ export function Maze({ size }: MazeProps) {
   }
 
   function handleSolve(): void {
-    if (isSolving) return;
-    setIsSolving(true);
-    console.debug('handleSolve is not implemented yet');
+    throw Error('handleSolve is not implemented yet');
   }
 
-  // TODO: This should maybe restore to already configured maze
   function handleReset(): void {
-    const cleanMazeState = {
-      board: createBoard(size),
-      start: null,
-      end: null,
-    };
-    setMazeState(cleanMazeState);
-    console.debug('Maze state restored to:', cleanMazeState);
-  }
-
-  function handleSetMazeState(newState: MazeState): void {
-    setMazeState(newState);
-    console.debug('New maze state:', newState);
+    throw Error('handleReset is not implemented yet');
   }
 
   return (

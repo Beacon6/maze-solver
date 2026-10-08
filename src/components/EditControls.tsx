@@ -1,4 +1,4 @@
-import { type EditMode } from '../types.ts';
+import { type EditMode } from '../types';
 
 type EditControlsProps = {
   editMode: EditMode;
@@ -7,7 +7,7 @@ type EditControlsProps = {
   onReset: () => void;
 };
 
-export function EditControls({ editMode, onChange, onSolve, onReset }: EditControlsProps) {
+export default function EditControls({ editMode, onChange, onSolve, onReset }: EditControlsProps) {
   const modes: { label: string; value: EditMode }[] = [
     { label: 'Start', value: 'setStart' },
     { label: 'End', value: 'setEnd' },

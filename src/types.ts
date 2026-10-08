@@ -8,19 +8,11 @@ export type Coordinates = {
   y: number;
 };
 
-export type SquareType = 'wall' | 'empty';
-
-export type Square = {
-  coords: Coordinates;
-  type: SquareType;
-  onPath: boolean;
-  isVisited: boolean;
-};
+export type EditMode = 'setStart' | 'setEnd' | 'setWall';
 
 export type MazeState = {
-  board: Square[][];
+  size: Size;
   start: Coordinates | null;
   end: Coordinates | null;
+  walls: Coordinates[];
 };
-
-export type EditMode = 'setStart' | 'setEnd' | 'setWall';
