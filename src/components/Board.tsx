@@ -11,29 +11,32 @@ type BoardProps = {
 
 export default function Board({ maze, editMode, onMazeChange }: BoardProps) {
   function handleEdit(coords: Coordinates, editMode: EditMode): void {
+    const wasStart = compareCoordinates(maze.start, coords);
+    const wasEnd = compareCoordinates(maze.end, coords);
     const clearedMaze: MazeState = {
       ...maze,
-      start: compareCoordinates(maze.start, coords) ? null : maze.start,
-      end: compareCoordinates(maze.end, coords) ? null : maze.end,
+      start: wasStart ? null : maze.start,
+      end: wasEnd ? null : maze.end,
       walls: maze.walls.filter((wall) => !compareCoordinates(wall, coords)),
     };
 
     if (editMode === 'setWall') {
+      const wasWall = maze.walls.some((wall) => compareCoordinates(wall, coords));
       onMazeChange({
         ...clearedMaze,
-        walls: [...clearedMaze.walls, coords],
+        walls: wasWall ? clearedMaze.walls : [...clearedMaze.walls, coords],
       });
       return;
     }
 
     const modeToParamMap = {
-      setStart: 'start',
-      setEnd: 'end',
+      setStart: { check: wasStart, param: 'start' },
+      setEnd: { check: wasEnd, param: 'end' },
     } as const;
 
     onMazeChange({
       ...clearedMaze,
-      [modeToParamMap[editMode]]: coords,
+      [modeToParamMap[editMode].param]: modeToParamMap[editMode].check ? clearedMaze.start : coords,
     });
   }
 
