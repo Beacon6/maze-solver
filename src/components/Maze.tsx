@@ -12,12 +12,14 @@ type MazeProps = {
 };
 
 export default function Maze({ size }: MazeProps) {
-  const [mazeState, setMazeState] = useState<MazeState>(() => ({
+  const initialMazeState: MazeState = {
     size: size,
     start: null,
     end: null,
     walls: [],
-  }));
+  };
+
+  const [mazeState, setMazeState] = useState<MazeState>(() => ({ ...initialMazeState }));
   const [editMode, setEditMode] = useState<EditMode>(DEFAULT_EDIT_MODE);
 
   function handleSetMazeState(maze: MazeState): void {
@@ -35,17 +37,13 @@ export default function Maze({ size }: MazeProps) {
     throw Error('handleSolve is not implemented yet');
   }
 
-  function handleReset(): void {
-    throw Error('handleReset is not implemented yet');
-  }
-
   return (
     <div className="grid items-start gap-5 md:grid-cols-[18rem_minmax(0,1fr)]">
       <EditControls
         editMode={editMode}
         onChange={handleEditMode}
         onSolve={handleSolve}
-        onReset={handleReset}
+        onClear={() => handleSetMazeState({ ...initialMazeState })}
       />
       <Board maze={mazeState} editMode={editMode} onMazeChange={handleSetMazeState} />
     </div>

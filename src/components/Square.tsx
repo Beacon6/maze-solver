@@ -18,7 +18,21 @@ export default function Square({ maze, position, editMode, onEdit }: SquareProps
   return (
     <button
       type="button"
-      onClick={() => onEdit(position, editMode)}
+      onClick={() => {
+        if (editMode === 'setStart' || editMode === 'setEnd') {
+          onEdit(position, editMode);
+        }
+      }}
+      onMouseDown={(e) => {
+        if (editMode === 'setWall' && e.button === 0) {
+          onEdit(position, editMode);
+        }
+      }}
+      onMouseEnter={(e) => {
+        if (editMode === 'setWall' && e.buttons === 1) {
+          onEdit(position, editMode);
+        }
+      }}
       className={'square ' + variant}
     />
   );

@@ -4,10 +4,10 @@ type EditControlsProps = {
   editMode: EditMode;
   onChange: (mode: EditMode) => void;
   onSolve: () => void;
-  onReset: () => void;
+  onClear: () => void;
 };
 
-export default function EditControls({ editMode, onChange, onSolve, onReset }: EditControlsProps) {
+export default function EditControls({ editMode, onChange, onSolve, onClear }: EditControlsProps) {
   const modes: { label: string; value: EditMode }[] = [
     { label: 'Start', value: 'setStart' },
     { label: 'End', value: 'setEnd' },
@@ -37,8 +37,8 @@ export default function EditControls({ editMode, onChange, onSolve, onReset }: E
           <button className="button-primary" onClick={onSolve}>
             Solve
           </button>
-          <button className="button-danger" onClick={onReset}>
-            Reset
+          <button className="button-danger" onClick={onClear}>
+            Clear
           </button>
         </div>
       </div>
