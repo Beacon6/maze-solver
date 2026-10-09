@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Board from './Board';
 import EditControls from './EditControls';
 
+import { logger } from '../helpers';
 import { type EditMode, type MazeState, type Size } from '../types';
 
 const DEFAULT_EDIT_MODE: EditMode = 'setStart';
@@ -24,13 +25,13 @@ export default function Maze({ size }: MazeProps) {
 
   function handleSetMazeState(maze: MazeState): void {
     setMazeState(maze);
-    console.debug('New maze state:', maze);
+    logger.debug('New maze state:', maze);
   }
 
   function handleEditMode(mode: EditMode): void {
     if (editMode === mode) return;
     setEditMode(mode);
-    console.debug('Setting edit mode:', mode);
+    logger.debug('Setting edit mode:', mode);
   }
 
   function handleSolve(): void {

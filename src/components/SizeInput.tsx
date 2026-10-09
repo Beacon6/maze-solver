@@ -1,3 +1,4 @@
+import { logger } from '../helpers';
 import { type Size } from '../types';
 
 const MIN_WIDTH = 1;
@@ -22,7 +23,7 @@ function mazeSizeIsValid(size: Size): boolean {
     height <= MAX_HEIGHT;
 
   if (!isValid) {
-    console.warn('Invalid maze size:', size);
+    logger.error('Invalid maze size:', size);
   }
   return isValid;
 }

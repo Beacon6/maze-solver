@@ -4,6 +4,7 @@ import Maze from './components/Maze';
 import Navbar from './components/Navbar';
 import SizeInput from './components/SizeInput';
 
+import { logger } from './helpers';
 import { type Size } from './types';
 
 export default function App() {
@@ -11,7 +12,7 @@ export default function App() {
 
   function handleSetSize(size: Size): void {
     setSize(size);
-    console.debug('Setting maze size:', size);
+    logger.debug('Setting maze size:', size);
   }
 
   return (
