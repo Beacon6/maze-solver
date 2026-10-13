@@ -1,15 +1,16 @@
 import Square from './Square';
 
 import { compareCoordinates } from '../helpers';
-import { type Coordinates, type EditMode, type MazeState } from '../types';
+import { type Coordinates, type EditMode, type MazeState, type SolverState } from '../types';
 
 type BoardProps = {
   maze: MazeState;
+  solver: SolverState;
   editMode: EditMode;
   onMazeChange: (newState: MazeState) => void;
 };
 
-export default function Board({ maze, editMode, onMazeChange }: BoardProps) {
+export default function Board({ maze, solver, editMode, onMazeChange }: BoardProps) {
   function handleEdit(coords: Coordinates, editMode: EditMode): void {
     const wasStart = compareCoordinates(maze.start, coords);
     const wasEnd = compareCoordinates(maze.end, coords);
@@ -50,6 +51,7 @@ export default function Board({ maze, editMode, onMazeChange }: BoardProps) {
               <Square
                 key={`${x},${y}`}
                 maze={maze}
+                solver={solver}
                 position={{ x: x, y: y }}
                 editMode={editMode}
                 onEdit={handleEdit}

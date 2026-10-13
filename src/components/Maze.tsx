@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import Board from './Board';
 import EditControls from './EditControls';
+import useSolver from '../hooks/useSolver';
 
 import { logger } from '../helpers';
 import { type EditMode, type MazeState, type Size } from '../types';
@@ -20,8 +21,9 @@ export default function Maze({ size }: MazeProps) {
     walls: [],
   };
 
-  const [mazeState, setMazeState] = useState<MazeState>(() => ({ ...initialMazeState }));
+  const [mazeState, setMazeState] = useState<MazeState>(() => initialMazeState);
   const [editMode, setEditMode] = useState<EditMode>(DEFAULT_EDIT_MODE);
+  const { solve, solverState } = useSolver(mazeState);
 
   function handleSetMazeState(maze: MazeState): void {
     setMazeState(maze);
@@ -35,7 +37,7 @@ export default function Maze({ size }: MazeProps) {
   }
 
   function handleSolve(): void {
-    throw Error('handleSolve is not implemented yet');
+    solve();
   }
 
   return (
@@ -44,9 +46,14 @@ export default function Maze({ size }: MazeProps) {
         editMode={editMode}
         onChange={handleEditMode}
         onSolve={handleSolve}
-        onClear={() => handleSetMazeState({ ...initialMazeState })}
+        onClear={() => handleSetMazeState(initialMazeState)}
       />
-      <Board maze={mazeState} editMode={editMode} onMazeChange={handleSetMazeState} />
+      <Board
+        maze={mazeState}
+        solver={solverState}
+        editMode={editMode}
+        onMazeChange={handleSetMazeState}
+      />
     </div>
   );
 }

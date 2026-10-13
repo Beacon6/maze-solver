@@ -16,3 +16,8 @@ export type MazeState = {
   end: Coordinates | null;
   walls: Coordinates[];
 };
+
+export type SolverState = {
+  path: Coordinates[];
+  seen: Coordinates[];
+};
