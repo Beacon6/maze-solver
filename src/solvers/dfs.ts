@@ -48,5 +48,5 @@ export default async function dfs(
     return false;
   }
 
-  await walk(maze, solver, maze.start, onStep);
+  await walk(maze, solver, maze.start!, onStep);
 }
