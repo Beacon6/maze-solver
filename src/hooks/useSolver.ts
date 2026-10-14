@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import dfs from '../solvers/dfs';
-import { sleep } from '../helpers';
+import { logger, sleep } from '../helpers';
 import { type MazeState, type SolverState } from '../types';
 
 export default function useSolver(maze: MazeState) {
@@ -18,7 +18,9 @@ export default function useSolver(maze: MazeState) {
       });
       await sleep(100);
     };
-    dfs(maze, clearedSolver, onStep);
+    dfs(maze, clearedSolver, onStep).catch((exc) => {
+      logger.error(exc);
+    });
   }
 
   return { solve, solverState };

@@ -48,5 +48,8 @@ export default async function dfs(
     return false;
   }
 
-  await walk(maze, solver, maze.start!, onStep);
+  if (!maze.start || !maze.end) {
+    throw Error("Maze endpoints cannot be 'null'");
+  }
+  await walk(maze, solver, maze.start, onStep);
 }
