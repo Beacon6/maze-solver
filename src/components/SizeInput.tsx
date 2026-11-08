@@ -1,3 +1,5 @@
+import InputField from './InputField';
+
 import { logger } from '../helpers';
 import { type Size } from '../types';
 
@@ -31,8 +33,8 @@ function mazeSizeIsValid(size: Size): boolean {
 export default function SizeInput({ onCreate }: SizeInputProps) {
   function handleSubmit(formData: FormData): void {
     const size: Size = {
-      width: Number(formData.get('width')),
-      height: Number(formData.get('height')),
+      width: formData.get('width') ? Number(formData.get('width')) : DEFAULT_WIDTH,
+      height: formData.get('height') ? Number(formData.get('height')) : DEFAULT_HEIGHT,
     };
 
     if (!mazeSizeIsValid(size)) return;
@@ -46,35 +48,18 @@ export default function SizeInput({ onCreate }: SizeInputProps) {
         Choose the dimensions for your editable maze grid.
       </p>
       <form action={handleSubmit} className="grid mt-4 gap-4">
-        <label htmlFor="width" className="grid gap-1.5 text-(--text-primary) text-sm font-semibold">
-          Width ({MIN_WIDTH} - {MAX_WIDTH})
-          <input
-            id="width"
-            name="width"
-            className="input"
-            defaultValue={DEFAULT_WIDTH}
-            type="number"
-            min={MIN_WIDTH}
-            max={MAX_WIDTH}
-            required
-          />
-        </label>
-        <label
-          htmlFor="height"
-          className="grid gap-1.5 text-(--text-primary) text-sm font-semibold"
-        >
-          Height ({MIN_HEIGHT} - {MAX_HEIGHT})
-          <input
-            id="height"
-            name="height"
-            className="input"
-            defaultValue={DEFAULT_HEIGHT}
-            type="number"
-            min={MIN_HEIGHT}
-            max={MAX_HEIGHT}
-            required
-          />
-        </label>
+        <InputField
+          inputName="Width"
+          minValue={MIN_WIDTH}
+          maxValue={MAX_WIDTH}
+          placeholder={DEFAULT_WIDTH.toString()}
+        />
+        <InputField
+          inputName="Height"
+          minValue={MIN_HEIGHT}
+          maxValue={MAX_HEIGHT}
+          placeholder={DEFAULT_HEIGHT.toString()}
+        />
         <button type="submit" className="button-primary">
           Create maze
         </button>
