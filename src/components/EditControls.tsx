@@ -1,3 +1,5 @@
+import Button from './Button';
+
 import { type EditMode } from '../types';
 
 type EditControlsProps = {
@@ -34,12 +36,8 @@ export default function EditControls({ editMode, onChange, onSolve, onClear }: E
           ))}
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <button className="button-primary" onClick={onSolve}>
-            Solve
-          </button>
-          <button className="button-danger" onClick={onClear}>
-            Clear
-          </button>
+          <Button text="Solve" variant="primary" clickAction={onSolve} />
+          <Button text="Clear" variant="danger" clickAction={onClear} />
         </div>
       </div>
     </section>

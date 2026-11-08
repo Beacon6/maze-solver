@@ -1,3 +1,4 @@
+import Button from './Button';
 import InputField from './InputField';
 
 import { logger } from '../helpers';
@@ -49,20 +50,18 @@ export default function SizeInput({ onCreate }: SizeInputProps) {
       </p>
       <form action={handleSubmit} className="grid mt-4 gap-4">
         <InputField
-          inputName="Width"
+          text="Width"
           minValue={MIN_WIDTH}
           maxValue={MAX_WIDTH}
           placeholder={DEFAULT_WIDTH.toString()}
         />
         <InputField
-          inputName="Height"
+          text="Height"
           minValue={MIN_HEIGHT}
           maxValue={MAX_HEIGHT}
           placeholder={DEFAULT_HEIGHT.toString()}
         />
-        <button type="submit" className="button-primary">
-          Create maze
-        </button>
+        <Button text="Create maze" variant="primary" />
       </form>
     </section>
   );
