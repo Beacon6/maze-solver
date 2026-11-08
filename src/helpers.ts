@@ -3,18 +3,18 @@ import { type Coordinates } from './types';
 const DEFAULT_SLEEP_MS = 100;
 
 export const logger = {
-  debug(...args: any[]): void {
+  debug(...args: unknown[]): void {
     if (import.meta.env.DEV) {
       console.debug(...args);
     }
   },
-  info(...args: any[]): void {
+  info(...args: unknown[]): void {
     console.info(...args);
   },
-  warn(...args: any[]): void {
+  warn(...args: unknown[]): void {
     console.warn(...args);
   },
-  error(...args: any[]): void {
+  error(...args: unknown[]): void {
     console.error(...args);
   },
 };
