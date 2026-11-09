@@ -20,4 +20,5 @@ export type MazeState = {
 export type SolverState = {
   path: Coordinates[];
   seen: Coordinates[];
+  finishedSolving: boolean;
 };

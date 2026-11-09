@@ -4,12 +4,21 @@ import { type EditMode } from '../types';
 
 type EditControlsProps = {
   editMode: EditMode;
+  finishedSolving: boolean;
   onChange: (mode: EditMode) => void;
   onSolve: () => void;
   onClear: () => void;
+  onReset: () => void;
 };
 
-export default function EditControls({ editMode, onChange, onSolve, onClear }: EditControlsProps) {
+export default function EditControls({
+  editMode,
+  finishedSolving,
+  onChange,
+  onSolve,
+  onClear,
+  onReset,
+}: EditControlsProps) {
   const modes: { label: string; value: EditMode }[] = [
     { label: 'Start', value: 'setStart' },
     { label: 'End', value: 'setEnd' },
@@ -39,6 +48,11 @@ export default function EditControls({ editMode, onChange, onSolve, onClear }: E
           <Button text="Solve" variant="primary" clickAction={onSolve} />
           <Button text="Clear" variant="danger" clickAction={onClear} />
         </div>
+        {finishedSolving && (
+          <div className="grid gap-2">
+            <Button text="Reset solution" variant="danger" clickAction={onReset} />
+          </div>
+        )}
       </div>
     </section>
   );
