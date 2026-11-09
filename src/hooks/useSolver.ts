@@ -5,22 +5,22 @@ import { logger, sleep } from '../helpers';
 import { type MazeState, type SolverState } from '../types';
 
 export default function useSolver(maze: MazeState) {
-  const initialSolverState: SolverState = { path: [], seen: [], finishedSolving: false };
+  const initialSolverState: SolverState = { path: [], seen: [] };
 
   const [solverState, setSolverState] = useState<SolverState>(() => initialSolverState);
+  const [finishedSolving, setFinishedSolving] = useState<boolean>(false);
 
   function solve(): void {
     const clearedSolver = initialSolverState;
     const onStep = async () => {
       setSolverState({
-        ...solverState,
         path: [...clearedSolver.path],
         seen: [...clearedSolver.seen],
       });
       await sleep(100);
     };
     dfs(maze, clearedSolver, onStep)
-      .then(() => setSolverState((prev) => ({ ...prev, finishedSolving: true })))
+      .then(() => setFinishedSolving(true))
       .catch((exc) => {
         logger.error(exc);
       });
@@ -28,7 +28,8 @@ export default function useSolver(maze: MazeState) {
 
   function reset(): void {
     setSolverState(initialSolverState);
+    setFinishedSolving(false);
   }
 
-  return { solve, reset, solverState };
+  return { solve, reset, solverState, finishedSolving };
 }

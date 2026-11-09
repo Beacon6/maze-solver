@@ -23,7 +23,7 @@ export default function Maze({ size }: MazeProps) {
 
   const [mazeState, setMazeState] = useState<MazeState>(() => initialMazeState);
   const [editMode, setEditMode] = useState<EditMode>(DEFAULT_EDIT_MODE);
-  const { solve, reset, solverState } = useSolver(mazeState);
+  const { solve, reset, solverState, finishedSolving } = useSolver(mazeState);
 
   function handleSetMazeState(maze: MazeState): void {
     setMazeState(maze);
@@ -46,7 +46,7 @@ export default function Maze({ size }: MazeProps) {
     <div className="grid items-start gap-5 md:grid-cols-[18rem_minmax(0,1fr)]">
       <EditControls
         editMode={editMode}
-        finishedSolving={solverState.finishedSolving}
+        finishedSolving={finishedSolving}
         onChange={handleEditMode}
         onSolve={() => solve()}
         onClear={handleClear}
