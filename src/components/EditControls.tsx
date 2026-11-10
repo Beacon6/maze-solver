@@ -48,11 +48,14 @@ export default function EditControls({
           <Button text="Solve" variant="primary" clickAction={onSolve} />
           <Button text="Clear" variant="danger" clickAction={onClear} />
         </div>
-        {finishedSolving && (
-          <div className="grid gap-2">
-            <Button text="Reset solution" variant="danger" clickAction={onReset} />
-          </div>
-        )}
+        <div className="grid gap-2">
+          <Button
+            text="Reset solution"
+            variant="danger"
+            clickAction={onReset}
+            disabled={!finishedSolving}
+          />
+        </div>
       </div>
     </section>
   );
