@@ -45,7 +45,11 @@ export default function EditControls({
           ))}
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <Button text="Solve" variant="primary" clickAction={onSolve} />
+          <Button
+            text="Solve"
+            variant={finishedSolving ? 'success' : 'primary'}
+            clickAction={onSolve}
+          />
           <Button text="Clear" variant="danger" clickAction={onClear} />
         </div>
         <div className="grid gap-2">

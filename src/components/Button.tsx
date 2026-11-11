@@ -1,4 +1,4 @@
-type ButtonVariant = 'primary' | 'danger';
+type ButtonVariant = 'primary' | 'danger' | 'success';
 
 type ButtonProps = {
   text: string;

@@ -37,7 +37,9 @@ export default function Board({ maze, solver, editMode, onMazeChange }: BoardPro
 
     onMazeChange({
       ...clearedMaze,
-      [modeToParamMap[editMode].param]: modeToParamMap[editMode].check ? clearedMaze.start : coords,
+      [modeToParamMap[editMode].param]: modeToParamMap[editMode].check
+        ? clearedMaze[modeToParamMap[editMode].param]
+        : coords,
     });
   }
 

@@ -22,7 +22,7 @@ export default function Maze({ size }: MazeProps) {
   };
 
   const [mazeState, setMazeState] = useState<MazeState>(() => initialMazeState);
-  const [editMode, setEditMode] = useState<EditMode>(DEFAULT_EDIT_MODE);
+  const [editMode, setEditMode] = useState<EditMode>(() => DEFAULT_EDIT_MODE);
   const { solve, reset, solverState, finishedSolving } = useSolver(mazeState);
 
   function handleSetMazeState(maze: MazeState): void {

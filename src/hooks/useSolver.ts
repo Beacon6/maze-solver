@@ -8,18 +8,18 @@ export default function useSolver(maze: MazeState) {
   const initialSolverState: SolverState = { path: [], seen: [] };
 
   const [solverState, setSolverState] = useState<SolverState>(() => initialSolverState);
-  const [finishedSolving, setFinishedSolving] = useState<boolean>(false);
+  const [finishedSolving, setFinishedSolving] = useState<boolean>(() => false);
 
-  function solve(): void {
-    const clearedSolver = initialSolverState;
-    const onStep = async () => {
-      setSolverState({
-        path: [...clearedSolver.path],
-        seen: [...clearedSolver.seen],
-      });
-      await sleep(100);
-    };
-    dfs(maze, clearedSolver, onStep)
+  async function onStep(): Promise<void> {
+    setSolverState({
+      path: [...initialSolverState.path],
+      seen: [...initialSolverState.seen],
+    });
+    await sleep(100);
+  }
+
+  async function solve(): Promise<void> {
+    await dfs(maze, initialSolverState, onStep)
       .then(() => setFinishedSolving(true))
       .catch((exc) => {
         logger.error(exc);

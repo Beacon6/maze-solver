@@ -7,7 +7,6 @@ export default function Navbar() {
       <a href="/" className="text-(--text-primary) text-2xl font-bold">
         {APP_TITLE}
       </a>
-      {/* TODO: Add help */}
       <a href={GITHUB_URL} className="social-button">
         <img src="/github.svg" />
       </a>
