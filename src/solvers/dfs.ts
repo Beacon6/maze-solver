@@ -32,6 +32,10 @@ export default async function dfs(
       return false;
     }
 
+    if (curr.x < 0 || curr.x > maze.size.width - 1 || curr.y < 0 || curr.y > maze.size.height - 1) {
+      return false;
+    }
+
     solver.path.push(curr);
     solver.seen.push(curr);
     await onStep();
