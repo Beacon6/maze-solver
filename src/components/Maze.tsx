@@ -14,15 +14,15 @@ type MazeProps = {
 };
 
 export default function Maze({ size }: MazeProps) {
-  const initialMazeState: MazeState = {
+  const createInitialMazeState = (): MazeState => ({
     size: size,
     start: null,
     end: null,
     walls: [],
-  };
+  });
 
-  const [mazeState, setMazeState] = useState<MazeState>(() => initialMazeState);
-  const [editMode, setEditMode] = useState<EditMode>(() => DEFAULT_EDIT_MODE);
+  const [mazeState, setMazeState] = useState<MazeState>(createInitialMazeState);
+  const [editMode, setEditMode] = useState<EditMode>(DEFAULT_EDIT_MODE);
   const { solve, reset, solverState, finishedSolving } = useSolver(mazeState);
 
   function handleSetMazeState(maze: MazeState): void {
@@ -37,7 +37,7 @@ export default function Maze({ size }: MazeProps) {
   }
 
   function handleClear(): void {
-    setMazeState(initialMazeState);
+    setMazeState(createInitialMazeState());
     reset();
     logger.debug('Maze state has been reset');
   }
