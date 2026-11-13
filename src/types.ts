@@ -17,7 +17,11 @@ export type MazeState = {
   walls: Coordinates[];
 };
 
+export type SolverStatus = 'idle' | 'solving' | 'finishedWithSuccess' | 'finishedWithFailure';
+
 export type SolverState = {
   path: Coordinates[];
   seen: Coordinates[];
 };
+
+export type ButtonVariant = 'primary' | 'danger' | 'success' | 'error';

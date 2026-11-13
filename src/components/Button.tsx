@@ -1,4 +1,4 @@
-type ButtonVariant = 'primary' | 'danger' | 'success';
+import { type ButtonVariant } from '../types';
 
 type ButtonProps = {
   text: string;

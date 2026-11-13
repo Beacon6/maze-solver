@@ -15,7 +15,8 @@
   --cell-empty: #dce3ef;
   --green: #35c98b;
   --green-strong: #53df8b;
-  --cell-end: #fa6f6f;
+  --red: #fa6f6f;
+  --red-strong: #ff856f;
   --cell-wall: #556176;
   --cell-path: #f5bd4f;
   --cell-seen: #79a8e8;
@@ -113,9 +114,9 @@ input {
 
 .button-danger {
   padding: 0.65rem 0.75rem;
-  border: 1px solid var(--cell-end);
+  border: 1px solid var(--red);
   border-radius: 0.65rem;
-  color: var(--cell-end);
+  color: var(--red);
   font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
@@ -147,6 +148,29 @@ input {
 
   &:hover:not(:disabled) {
     background: var(--green-strong);
+  }
+
+  &:disabled {
+    background: var(--surface-raised);
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.button-error {
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.65rem;
+  color: var(--text-primary);
+  background: var(--red);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background var(--transition-time),
+    opacity var(--transition-time);
+
+  &:hover:not(:disabled) {
+    background: var(--red-strong);
   }
 
   &:disabled {
@@ -211,7 +235,7 @@ input {
 }
 
 .square--end {
-  background: var(--cell-end);
+  background: var(--red);
 }
 
 .square--wall {

@@ -1,19 +1,25 @@
 import Button from './Button';
 
-import { type EditMode } from '../types';
+import { type ButtonVariant, type EditMode, type SolverStatus } from '../types';
 
 type EditControlsProps = {
   editMode: EditMode;
-  finishedSolving: boolean;
+  solverStatus: SolverStatus;
   onChange: (mode: EditMode) => void;
   onSolve: () => void;
   onClear: () => void;
   onReset: () => void;
 };
 
+function determineVariant(status: SolverStatus): ButtonVariant {
+  if (status === 'finishedWithSuccess') return 'success';
+  if (status === 'finishedWithFailure') return 'error';
+  return 'primary';
+}
+
 export default function EditControls({
   editMode,
-  finishedSolving,
+  solverStatus,
   onChange,
   onSolve,
   onClear,
@@ -47,17 +53,23 @@ export default function EditControls({
         <div className="grid grid-cols-2 gap-2">
           <Button
             text="Solve"
-            variant={finishedSolving ? 'success' : 'primary'}
+            variant={determineVariant(solverStatus)}
             clickAction={onSolve}
+            disabled={solverStatus === 'solving'}
           />
-          <Button text="Clear" variant="danger" clickAction={onClear} />
+          <Button
+            text="Clear"
+            variant="danger"
+            clickAction={onClear}
+            disabled={solverStatus === 'solving'}
+          />
         </div>
         <div className="grid gap-2">
           <Button
             text="Reset solution"
             variant="danger"
             clickAction={onReset}
-            disabled={!finishedSolving}
+            disabled={solverStatus === 'idle' || solverStatus === 'solving'}
           />
         </div>
       </div>

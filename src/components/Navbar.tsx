@@ -8,7 +8,7 @@ export default function Navbar() {
         {APP_TITLE}
       </a>
       <a href={GITHUB_URL} className="social-button">
-        <img src="/github.svg" />
+        <img src="github.svg" />
       </a>
     </nav>
   );
