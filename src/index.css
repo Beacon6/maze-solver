@@ -221,7 +221,6 @@ input {
   background: var(--cell-empty);
   transition:
     border-color var(--transition-time),
-    background var(--transition-time),
     transform var(--transition-time);
 
   &:hover {

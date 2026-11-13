@@ -5,11 +5,12 @@ import { compareCoordinates, logger, sleep } from '../helpers';
 import { type MazeState, type SolverState, type SolverStatus } from '../types';
 
 const DEFAULT_SOLVER_STATUS: SolverStatus = 'idle';
+const DELAY_BETWEEN_STEPS_MS = 25;
 
 function determineStatus(maze: MazeState, solver: SolverState): SolverStatus {
-  if (compareCoordinates(solver.path.at(-1), maze.end)) {
-    return 'finishedWithSuccess';
-  }
+  let last_cell = solver.path.at(-1);
+  if (!last_cell || !maze.end) throw Error("Compared coordinates cannot be 'null'");
+  if (compareCoordinates(last_cell, maze.end)) return 'finishedWithSuccess';
   return 'finishedWithFailure';
 }
 
@@ -28,7 +29,7 @@ export default function useSolver(maze: MazeState) {
         path: [...workingSolverState.path],
         seen: [...workingSolverState.seen],
       });
-      await sleep(100);
+      await sleep(DELAY_BETWEEN_STEPS_MS);
     };
 
     await dfs(maze, workingSolverState, onStep)
