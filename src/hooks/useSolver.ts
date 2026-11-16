@@ -8,8 +8,8 @@ const DEFAULT_SOLVER_STATUS: SolverStatus = 'idle';
 const DELAY_BETWEEN_STEPS_MS = 25;
 
 function determineStatus(maze: MazeState, solver: SolverState): SolverStatus {
-  let last_cell = solver.path.at(-1);
-  if (!last_cell || !maze.end) throw Error("Compared coordinates cannot be 'null'");
+  const last_cell = solver.path.at(-1) ?? null;
+  if (!maze.end) throw Error("Maze endpoints cannot be 'null'");
   if (compareCoordinates(last_cell, maze.end)) return 'finishedWithSuccess';
   return 'finishedWithFailure';
 }
