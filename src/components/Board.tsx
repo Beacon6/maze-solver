@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import Square from './Square';
 
 import { compareCoordinates } from '../helpers';
@@ -7,41 +9,45 @@ type BoardProps = {
   maze: MazeState;
   solver: SolverState;
   editMode: EditMode;
-  onMazeChange: (newState: MazeState) => void;
+  onMazeChange: React.Dispatch<React.SetStateAction<MazeState>>;
 };
 
 export default function Board({ maze, solver, editMode, onMazeChange }: BoardProps) {
-  function handleEdit(coords: Coordinates, editMode: EditMode): void {
-    const wasStart = compareCoordinates(maze.start, coords);
-    const wasEnd = compareCoordinates(maze.end, coords);
-    const clearedMaze: MazeState = {
-      ...maze,
-      start: wasStart ? null : maze.start,
-      end: wasEnd ? null : maze.end,
-      walls: maze.walls.filter((wall) => !compareCoordinates(wall, coords)),
-    };
+  const handleEdit = useCallback(
+    (coords: Coordinates): void => {
+      onMazeChange((m) => {
+        const wasStart = compareCoordinates(m.start, coords);
+        const wasEnd = compareCoordinates(m.end, coords);
+        const clearedMaze: MazeState = {
+          ...m,
+          start: wasStart ? null : m.start,
+          end: wasEnd ? null : m.end,
+          walls: m.walls.filter((wall) => !compareCoordinates(wall, coords)),
+        };
 
-    if (editMode === 'setWall') {
-      const wasWall = maze.walls.some((wall) => compareCoordinates(wall, coords));
-      onMazeChange({
-        ...clearedMaze,
-        walls: wasWall ? clearedMaze.walls : [...clearedMaze.walls, coords],
+        if (editMode === 'setWall') {
+          const wasWall = m.walls.some((wall) => compareCoordinates(wall, coords));
+          return {
+            ...clearedMaze,
+            walls: wasWall ? clearedMaze.walls : [...clearedMaze.walls, coords],
+          };
+        }
+
+        const modeToParamMap = {
+          setStart: { check: wasStart, param: 'start' },
+          setEnd: { check: wasEnd, param: 'end' },
+        } as const;
+
+        return {
+          ...clearedMaze,
+          [modeToParamMap[editMode].param]: modeToParamMap[editMode].check
+            ? clearedMaze[modeToParamMap[editMode].param]
+            : coords,
+        };
       });
-      return;
-    }
-
-    const modeToParamMap = {
-      setStart: { check: wasStart, param: 'start' },
-      setEnd: { check: wasEnd, param: 'end' },
-    } as const;
-
-    onMazeChange({
-      ...clearedMaze,
-      [modeToParamMap[editMode].param]: modeToParamMap[editMode].check
-        ? clearedMaze[modeToParamMap[editMode].param]
-        : coords,
-    });
-  }
+    },
+    [editMode, onMazeChange]
+  );
 
   return (
     <section id="maze">
@@ -49,16 +55,29 @@ export default function Board({ maze, solver, editMode, onMazeChange }: BoardPro
       <div className="grid place-items-center gap-1">
         {Array.from({ length: maze.size.height }, (_, y) => (
           <div key={y} className="grid grid-flow-col gap-1">
-            {Array.from({ length: maze.size.width }, (_, x) => (
-              <Square
-                key={`${x},${y}`}
-                maze={maze}
-                solver={solver}
-                position={{ x: x, y: y }}
-                editMode={editMode}
-                onEdit={handleEdit}
-              />
-            ))}
+            {Array.from({ length: maze.size.width }, (_, x) => {
+              const position = { x: x, y: y };
+              const isStart = compareCoordinates(maze.start, position);
+              const isEnd = compareCoordinates(maze.end, position);
+              const isWall = maze.walls.some((wall) => compareCoordinates(wall, position));
+              const isPath = solver.path.some((cell) => compareCoordinates(cell, position));
+              const isSeen = solver.seen.some((cell) => compareCoordinates(cell, position));
+
+              return (
+                <Square
+                  key={`${x},${y}`}
+                  x={x}
+                  y={y}
+                  isStart={isStart}
+                  isEnd={isEnd}
+                  isWall={isWall}
+                  isPath={isPath}
+                  isSeen={isSeen}
+                  editMode={editMode}
+                  onEdit={handleEdit}
+                />
+              );
+            })}
           </div>
         ))}
       </div>

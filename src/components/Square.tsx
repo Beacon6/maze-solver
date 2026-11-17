@@ -1,21 +1,31 @@
-import { compareCoordinates } from '../helpers';
-import { type Coordinates, type EditMode, type MazeState, type SolverState } from '../types';
+import { memo } from 'react';
+
+import { type Coordinates, type EditMode } from '../types';
 
 type SquareProps = {
-  maze: MazeState;
-  solver: SolverState;
-  position: Coordinates;
+  x: number;
+  y: number;
+  isStart: boolean;
+  isEnd: boolean;
+  isWall: boolean;
+  isPath: boolean;
+  isSeen: boolean;
   editMode: EditMode;
-  onEdit: (coords: Coordinates, editMode: EditMode) => void;
+  onEdit: (coords: Coordinates) => void;
 };
 
-export default function Square({ maze, solver, position, editMode, onEdit }: SquareProps) {
-  const isStart = compareCoordinates(maze.start, position);
-  const isEnd = compareCoordinates(maze.end, position);
-  const isWall = maze.walls.some((wall) => compareCoordinates(wall, position));
-  const isPath = solver.path.some((cell) => compareCoordinates(cell, position));
-  const isSeen = solver.seen.some((cell) => compareCoordinates(cell, position));
-
+const Square = memo(function Square({
+  x,
+  y,
+  isStart,
+  isEnd,
+  isWall,
+  isPath,
+  isSeen,
+  editMode,
+  onEdit,
+}: SquareProps) {
+  const position = { x: x, y: y };
   const variant = isStart
     ? 'square--start'
     : isEnd
@@ -33,20 +43,22 @@ export default function Square({ maze, solver, position, editMode, onEdit }: Squ
       type="button"
       onClick={() => {
         if (editMode === 'setStart' || editMode === 'setEnd') {
-          onEdit(position, editMode);
+          onEdit(position);
         }
       }}
       onMouseDown={(e) => {
         if (editMode === 'setWall' && e.button === 0) {
-          onEdit(position, editMode);
+          onEdit(position);
         }
       }}
       onMouseEnter={(e) => {
         if (editMode === 'setWall' && e.buttons === 1) {
-          onEdit(position, editMode);
+          onEdit(position);
         }
       }}
       className={'square ' + variant}
     />
   );
-}
+});
+
+export default Square;

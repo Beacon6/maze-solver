@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Board from './Board';
 import EditControls from './EditControls';
@@ -25,10 +25,9 @@ export default function Maze({ size }: MazeProps) {
   const [editMode, setEditMode] = useState<EditMode>(DEFAULT_EDIT_MODE);
   const { solve, reset, solverState, solverStatus } = useSolver(mazeState);
 
-  function handleSetMazeState(maze: MazeState): void {
-    setMazeState(maze);
-    logger.debug('New maze state:', maze);
-  }
+  useEffect(() => {
+    logger.debug('New maze state:', mazeState);
+  }, [mazeState]);
 
   function handleEditMode(mode: EditMode): void {
     if (editMode === mode) return;
@@ -56,7 +55,7 @@ export default function Maze({ size }: MazeProps) {
         maze={mazeState}
         solver={solverState}
         editMode={editMode}
-        onMazeChange={handleSetMazeState}
+        onMazeChange={setMazeState}
       />
     </div>
   );
