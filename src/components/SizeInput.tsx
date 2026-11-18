@@ -1,7 +1,6 @@
 import Button from './Button';
 import InputField from './InputField';
 
-import { logger } from '../helpers';
 import { type Size } from '../types';
 
 const MIN_WIDTH = 1;
@@ -12,10 +11,10 @@ const DEFAULT_HEIGHT = 10;
 const MAX_HEIGHT = 24;
 
 type SizeInputProps = {
-  onCreate: (size: Size) => void;
+  onSubmit: (size: Size) => void;
 };
 
-function mazeSizeIsValid(size: Size): boolean {
+function validateSize(size: Size): boolean {
   const { width, height } = size;
   const isValid =
     Number.isInteger(width) &&
@@ -25,21 +24,19 @@ function mazeSizeIsValid(size: Size): boolean {
     MIN_HEIGHT <= height &&
     height <= MAX_HEIGHT;
 
-  if (!isValid) {
-    logger.error('Invalid maze size:', size);
-  }
+  if (!isValid) console.error('Invalid maze size:', size);
   return isValid;
 }
 
-export default function SizeInput({ onCreate }: SizeInputProps) {
+function SizeInput({ onSubmit }: SizeInputProps) {
   function handleSubmit(formData: FormData): void {
-    const size: Size = {
+    const size = {
       width: formData.get('width') ? Number(formData.get('width')) : DEFAULT_WIDTH,
       height: formData.get('height') ? Number(formData.get('height')) : DEFAULT_HEIGHT,
     };
 
-    if (!mazeSizeIsValid(size)) return;
-    onCreate(size);
+    if (!validateSize(size)) return;
+    onSubmit(size);
   }
 
   return (
@@ -66,3 +63,5 @@ export default function SizeInput({ onCreate }: SizeInputProps) {
     </section>
   );
 }
+
+export default SizeInput;

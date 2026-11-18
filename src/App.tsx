@@ -4,16 +4,10 @@ import Maze from './components/Maze';
 import Navbar from './components/Navbar';
 import SizeInput from './components/SizeInput';
 
-import { logger } from './helpers';
 import { type Size } from './types';
 
-export default function App() {
+function App() {
   const [size, setSize] = useState<Size>();
-
-  function handleSetSize(size: Size): void {
-    setSize(size);
-    logger.debug('Setting maze size:', size);
-  }
 
   return (
     <>
@@ -21,8 +15,10 @@ export default function App() {
         <Navbar />
       </header>
       <main className="max-w-5xl mx-auto p-5">
-        {size ? <Maze size={size} /> : <SizeInput onCreate={handleSetSize} />}
+        {size ? <Maze size={size} /> : <SizeInput onSubmit={setSize} />}
       </main>
     </>
   );
 }
+
+export default App;

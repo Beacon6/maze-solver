@@ -1,15 +1,19 @@
-const APP_TITLE = 'Maze Solver';
-const GITHUB_URL = 'https://github.com/Beacon6/maze-solver';
+import { memo } from 'react';
 
-export default function Navbar() {
+const Navbar = memo(function Navbar() {
+  const appTitle = 'MazeSolver';
+  const githubUrl = 'https://github.com/Beacon6/maze-solver';
+
   return (
     <nav className="flex items-center justify-between">
       <a href="/" className="text-(--text-primary) text-2xl font-bold">
-        {APP_TITLE}
+        {appTitle}
       </a>
-      <a href={GITHUB_URL} className="social-button">
+      <a href={githubUrl} className="social-button">
         <img src="github.svg" />
       </a>
     </nav>
   );
-}
+});
+
+export default Navbar;
