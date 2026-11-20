@@ -1,4 +1,5 @@
 import Button from './Button';
+import Radio from './Radio';
 
 import { type ButtonVariant, type EditMode, type SolverStatus } from '../types';
 
@@ -39,15 +40,14 @@ export default function EditControls({
       <div className="grid gap-2">
         <div className="grid grid-cols-3 gap-2">
           {modes.map((mode) => (
-            <label className="controls-toggle" key={mode.value}>
-              <input
-                checked={editMode === mode.value}
-                type="radio"
-                value={mode.value}
-                onChange={() => onChange(mode.value)}
-              />
-              <span>{mode.label}</span>
-            </label>
+            <Radio
+              key={mode.value}
+              value={mode.value}
+              label={mode.label}
+              checked={editMode === mode.value}
+              disabled={solverStatus === 'solving'}
+              changeAction={() => onChange(mode.value)}
+            />
           ))}
         </div>
         <div className="grid grid-cols-2 gap-2">
