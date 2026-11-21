@@ -194,7 +194,8 @@ input {
     cursor: pointer;
     transition:
       border-color var(--transition-time),
-      background var(--transition-time);
+      background var(--transition-time),
+      opacity var(--transition-time);
   }
 
   &:hover span {
@@ -209,6 +210,13 @@ input {
     &:checked + span {
       border-color: var(--primary);
       background: var(--primary-subtle);
+    }
+
+    &:disabled + span {
+      border-color: var(--border);
+      background: var(--surface-raised);
+      opacity: 0.65;
+      cursor: not-allowed;
     }
   }
 }
