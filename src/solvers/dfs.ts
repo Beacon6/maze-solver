@@ -1,5 +1,5 @@
-import { compareCoordinates } from '../helpers';
-import { type Coordinates, type MazeState, type SolverState } from '../types';
+import { compareCoordinates } from '../utils/helpers';
+import { type Coordinates, type MazeState, type SolverState } from '../utils/types';
 
 export default async function dfs(
   maze: MazeState,

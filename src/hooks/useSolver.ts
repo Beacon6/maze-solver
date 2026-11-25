@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import dfs from '../solvers/dfs';
-import { compareCoordinates, logger, sleep } from '../helpers';
-import { type MazeState, type SolverState, type SolverStatus } from '../types';
+import { compareCoordinates, logger, sleep } from '../utils/helpers';
+import { type MazeState, type SolverState, type SolverStatus } from '../utils/types';
 
 const DEFAULT_SOLVER_STATUS: SolverStatus = 'idle';
 const DELAY_BETWEEN_STEPS_MS = 25;
@@ -40,10 +40,10 @@ export default function useSolver(maze: MazeState) {
       });
   }
 
-  function reset(): void {
+  function resetSolver(): void {
     setSolverState(createInitialSolverState());
     setSolverStatus('idle');
   }
 
-  return { solve, reset, solverState, solverStatus };
+  return { solve, resetSolver, solverState, solverStatus };
 }

@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 
 import Square from './Square';
-
-import { compareCoordinates } from '../helpers';
-import { type Coordinates, type EditMode, type MazeState, type SolverState } from '../types';
+import { compareCoordinates } from '../utils/helpers';
+import { type Coordinates, type EditMode, type MazeState, type SolverState } from '../utils/types';
 
 type BoardProps = {
   maze: MazeState;
@@ -12,7 +11,7 @@ type BoardProps = {
   onMazeChange: React.Dispatch<React.SetStateAction<MazeState>>;
 };
 
-export default function Board({ maze, solver, editMode, onMazeChange }: BoardProps) {
+function Board({ maze, solver, editMode, onMazeChange }: BoardProps) {
   const handleEdit = useCallback(
     (coords: Coordinates): void => {
       onMazeChange((m) => {
@@ -84,3 +83,5 @@ export default function Board({ maze, solver, editMode, onMazeChange }: BoardPro
     </section>
   );
 }
+
+export default Board;

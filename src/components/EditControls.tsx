@@ -1,7 +1,6 @@
-import Button from './Button';
+import Button, { type ButtonVariant } from './Button';
 import Radio from './Radio';
-
-import { type ButtonVariant, type EditMode, type SolverStatus } from '../types';
+import { type EditMode, type SolverStatus } from '../utils/types';
 
 type EditControlsProps = {
   editMode: EditMode;
@@ -18,7 +17,7 @@ function determineVariant(status: SolverStatus): ButtonVariant {
   return 'primary';
 }
 
-export default function EditControls({
+function EditControls({
   editMode,
   solverStatus,
   onChange,
@@ -39,14 +38,14 @@ export default function EditControls({
       </h2>
       <div className="grid gap-2">
         <div className="grid grid-cols-3 gap-2">
-          {modes.map((mode) => (
+          {modes.map((m) => (
             <Radio
-              key={mode.value}
-              value={mode.value}
-              label={mode.label}
-              checked={editMode === mode.value}
+              key={m.value}
+              value={m.value}
+              label={m.label}
+              checked={editMode === m.value}
               disabled={solverStatus === 'solving'}
-              changeAction={() => onChange(mode.value)}
+              onChange={() => onChange(m.value)}
             />
           ))}
         </div>
@@ -54,13 +53,13 @@ export default function EditControls({
           <Button
             text="Solve"
             variant={determineVariant(solverStatus)}
-            clickAction={onSolve}
+            onClick={onSolve}
             disabled={solverStatus === 'solving'}
           />
           <Button
             text="Clear"
             variant="danger"
-            clickAction={onClear}
+            onClick={onClear}
             disabled={solverStatus === 'solving'}
           />
         </div>
@@ -68,7 +67,7 @@ export default function EditControls({
           <Button
             text="Reset solution"
             variant="danger"
-            clickAction={onReset}
+            onClick={onReset}
             disabled={solverStatus === 'idle' || solverStatus === 'solving'}
           />
         </div>
@@ -76,3 +75,5 @@ export default function EditControls({
     </section>
   );
 }
+
+export default EditControls;

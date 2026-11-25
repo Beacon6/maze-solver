@@ -1,16 +1,18 @@
-import { type ButtonVariant } from '../types';
+export type ButtonVariant = 'primary' | 'danger' | 'success' | 'error';
 
 type ButtonProps = {
   text: string;
   variant: ButtonVariant;
   disabled?: boolean;
-  clickAction?: () => void;
+  onClick?: () => void;
 };
 
-export default function Button({ text, variant, disabled, clickAction }: ButtonProps) {
+function Button({ text, variant, disabled, onClick }: ButtonProps) {
   return (
-    <button type="submit" className={`button-${variant}`} onClick={clickAction} disabled={disabled}>
+    <button type="submit" className={`button-${variant}`} onClick={onClick} disabled={disabled}>
       {text}
     </button>
   );
 }
+
+export default Button;

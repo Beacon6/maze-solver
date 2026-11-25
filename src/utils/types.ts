@@ -23,5 +23,3 @@ export type SolverState = {
   path: Coordinates[];
   seen: Coordinates[];
 };
-
-export type ButtonVariant = 'primary' | 'danger' | 'success' | 'error';

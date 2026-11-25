@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import { type Coordinates, type EditMode } from '../types';
+import { type Coordinates, type EditMode } from '../utils/types';
 
 type SquareProps = {
   x: number;

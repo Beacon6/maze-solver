@@ -1,7 +1,6 @@
 import Button from './Button';
 import InputField from './InputField';
-
-import { type Size } from '../types';
+import { type Size } from '../utils/types';
 
 const MIN_WIDTH = 1;
 const DEFAULT_WIDTH = 10;
@@ -29,7 +28,7 @@ function validateSize(size: Size): boolean {
 }
 
 function SizeInput({ onSubmit }: SizeInputProps) {
-  function handleSubmit(formData: FormData): void {
+  const handleSubmit = (formData: FormData): void => {
     const size = {
       width: formData.get('width') ? Number(formData.get('width')) : DEFAULT_WIDTH,
       height: formData.get('height') ? Number(formData.get('height')) : DEFAULT_HEIGHT,
@@ -37,7 +36,7 @@ function SizeInput({ onSubmit }: SizeInputProps) {
 
     if (!validateSize(size)) return;
     onSubmit(size);
-  }
+  };
 
   return (
     <section id="size-input" className="max-w-md mx-auto p-5">

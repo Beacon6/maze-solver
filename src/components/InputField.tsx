@@ -5,7 +5,7 @@ type InputFieldProps = {
   placeholder: string;
 };
 
-export default function InputField({ text, minValue, maxValue, placeholder }: InputFieldProps) {
+function InputField({ text, minValue, maxValue, placeholder }: InputFieldProps) {
   return (
     <label
       htmlFor={text.toLowerCase()}
@@ -24,3 +24,5 @@ export default function InputField({ text, minValue, maxValue, placeholder }: In
     </label>
   );
 }
+
+export default InputField;
