@@ -1,10 +1,10 @@
 import { compareCoordinates } from '../utils/helpers';
 import { type Coordinates, type MazeState, type SolverState } from '../utils/types';
 
-export default async function dfs(
+async function dfs(
   maze: MazeState,
   solver: SolverState,
-  onStep: () => Promise<void>
+  onStep: (solver: SolverState) => Promise<void>
 ): Promise<void> {
   const dirs = [
     [0, -1],
@@ -13,15 +13,15 @@ export default async function dfs(
     [-1, 0],
   ];
 
-  async function walk(
+  const walk = async (
     maze: MazeState,
     solver: SolverState,
     curr: Coordinates,
-    onStep: () => Promise<void>
-  ): Promise<boolean> {
+    onStep: (solver: SolverState) => Promise<void>
+  ): Promise<boolean> => {
     if (compareCoordinates(maze.end, curr)) {
       solver.path.push(curr);
-      await onStep();
+      await onStep(solver);
       return true;
     }
 
@@ -38,7 +38,7 @@ export default async function dfs(
 
     solver.path.push(curr);
     solver.seen.push(curr);
-    await onStep();
+    await onStep(solver);
 
     for (let i = 0; i < dirs.length; i++) {
       const nextCell: Coordinates = { x: curr.x + dirs[i][0], y: curr.y + dirs[i][1] };
@@ -48,12 +48,14 @@ export default async function dfs(
     }
 
     solver.path.pop();
-    await onStep();
+    await onStep(solver);
     return false;
-  }
+  };
 
   if (!maze.start || !maze.end) {
     throw Error("Maze endpoints cannot be 'null'");
   }
   await walk(maze, solver, maze.start, onStep);
 }
+
+export default dfs;

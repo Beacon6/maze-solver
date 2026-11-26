@@ -1,25 +1,27 @@
-export type Size = {
+type Size = {
   width: number;
   height: number;
 };
 
-export type Coordinates = {
+type Coordinates = {
   x: number;
   y: number;
 };
 
-export type EditMode = 'setStart' | 'setEnd' | 'setWall';
+type EditMode = 'setStart' | 'setEnd' | 'setWall';
 
-export type MazeState = {
+type MazeState = {
   size: Size;
   start: Coordinates | null;
   end: Coordinates | null;
   walls: Coordinates[];
 };
 
-export type SolverStatus = 'idle' | 'solving' | 'finishedWithSuccess' | 'finishedWithFailure';
+type SolverStatus = 'idle' | 'solving' | 'finishedWithSuccess' | 'finishedWithFailure';
 
-export type SolverState = {
+type SolverState = {
   path: Coordinates[];
   seen: Coordinates[];
 };
+
+export type { Coordinates, EditMode, MazeState, Size, SolverState, SolverStatus };

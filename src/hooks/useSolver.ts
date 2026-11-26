@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import dfs from '../solvers/dfs';
-import { compareCoordinates, logger, sleep } from '../utils/helpers';
+import { compareCoordinates, sleep } from '../utils/helpers';
 import { type MazeState, type SolverState, type SolverStatus } from '../utils/types';
 
 const DEFAULT_SOLVER_STATUS: SolverStatus = 'idle';
@@ -14,36 +14,38 @@ function determineStatus(maze: MazeState, solver: SolverState): SolverStatus {
   return 'finishedWithFailure';
 }
 
-export default function useSolver(maze: MazeState) {
+function useSolver(maze: MazeState) {
   const createInitialSolverState = (): SolverState => ({ path: [], seen: [] });
 
   const [solverState, setSolverState] = useState<SolverState>(createInitialSolverState);
   const [solverStatus, setSolverStatus] = useState<SolverStatus>(DEFAULT_SOLVER_STATUS);
 
-  async function solve(): Promise<void> {
+  const onStep = async (solver: SolverState): Promise<void> => {
+    setSolverState({
+      path: [...solver.path],
+      seen: [...solver.seen],
+    });
+    await sleep(DELAY_BETWEEN_STEPS_MS);
+  };
+
+  const solve = async (): Promise<void> => {
     setSolverStatus('solving');
     const workingSolverState = createInitialSolverState();
-
-    const onStep = async () => {
-      setSolverState({
-        path: [...workingSolverState.path],
-        seen: [...workingSolverState.seen],
-      });
-      await sleep(DELAY_BETWEEN_STEPS_MS);
-    };
 
     await dfs(maze, workingSolverState, onStep)
       .then(() => setSolverStatus(determineStatus(maze, workingSolverState)))
       .catch((exc) => {
-        setSolverStatus('idle');
-        logger.error(exc);
+        setSolverStatus('finishedWithFailure');
+        console.error(exc);
       });
-  }
+  };
 
-  function resetSolver(): void {
+  const resetSolver = (): void => {
     setSolverState(createInitialSolverState());
     setSolverStatus('idle');
-  }
+  };
 
   return { solve, resetSolver, solverState, solverStatus };
 }
+
+export default useSolver;
